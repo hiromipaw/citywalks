@@ -5,16 +5,17 @@ module WalkLocator
     before_filter :entry_action
   end
 
-
   def walks_by_point(point)
     point = point.split(',')
     @walks = Walk.geo_near([ point[0].to_f, point[1].to_f ]).spherical
   end
 
   def walks_by_ip(ip)
-    block =
+    block = Walk.new.request_block(ip).doc["ip_block"]
     if block
-      Walks.geo_near([ block.longitude.to_f, block.latitude.to_f ]).spherical
+      longitude = block["ip_block"]["point"].scan(/\(([^\)]+)\)/).last.first.split(" ")[0]
+      latitude = ["ip_block"]["point"].scan(/\(([^\)]+)\)/).last.first.split(" ")[1]
+      Walk.geo_near([ longitude.to_f, latitude.to_f ]).spherical
     end
   end
 

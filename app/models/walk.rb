@@ -1,7 +1,9 @@
 class Walk
   include Mongoid::Document
   include Mongoid::Timestamps::Created
-  include Wikipin
+  extend Wikipin
+  extend Wikicat
+  extend Restful
 
 
   field :title, type: String
