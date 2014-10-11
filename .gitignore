@@ -7,9 +7,11 @@
 # Ignore bundler config.
 /.bundle
 
-# Ignore the default SQLite database.
+# Ignore the default database.
 /db/data/*
 
+# Ignore .idea folder
+.idea
 
 # Ignore all logfiles and tempfiles.
 /log/*.log
