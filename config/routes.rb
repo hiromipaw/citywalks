@@ -4,8 +4,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      get '/walks', :to => 'walks#index'
-
+      resources :walks
     end
   end
 end

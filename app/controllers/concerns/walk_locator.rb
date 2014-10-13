@@ -2,19 +2,19 @@ module WalkLocator
   extend ActiveSupport::Concern
 
   included do
-    before_filter :entry_action
+    before_filter :entry_action, only: [:index]
   end
 
   def walks_by_point(point)
-    point = point.split(',')
+    point = point.split(",")
     @walks = Walk.geo_near([ point[0].to_f, point[1].to_f ]).spherical
   end
 
   def walks_by_ip(ip)
-    block = Walk.new.request_block(ip).doc["ip_block"]
+    block = Walk.request_block(ip).doc["ip_block"]
     if block
-      longitude = block["ip_block"]["point"].scan(/\(([^\)]+)\)/).last.first.split(" ")[0]
-      latitude = ["ip_block"]["point"].scan(/\(([^\)]+)\)/).last.first.split(" ")[1]
+      longitude = block["point"].scan(/\(([^\)]+)\)/).last.first.split(" ")[0]
+      latitude = block["point"].scan(/\(([^\)]+)\)/).last.first.split(" ")[1]
       Walk.geo_near([ longitude.to_f, latitude.to_f ]).spherical
     end
   end
@@ -25,8 +25,8 @@ module WalkLocator
 
   def entry_action
 
-    if params[:point]
-      @walks = walks_by_point(params[:point])
+    if params[:location]
+      @walks = walks_by_point(params[:location])
     else
       @walks = walks_by_ip(request.remote_ip)
     end
