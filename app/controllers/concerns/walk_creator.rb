@@ -4,6 +4,7 @@ module WalkCreator
   def initialize_walk(params)
     params[:location] = set_location(params[:location])
     params[:pins] = params[:pins].split(",")
+    params[:categories] = get_categories(params[:pins]) unless params[:categories]
     Walk.new(params)
   end
 
@@ -29,7 +30,7 @@ module WalkCreator
         categories += result
       end
     end
-
+    categories
   end
 
   def retrieve_position(ip)

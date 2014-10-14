@@ -10,7 +10,7 @@ module Wikicat
     cat = get_pin["pin"]
     if cat["pin"]
       sub_category = cat["title"]
-      request_upper_graph(sub_category)
+      request_upper_graph(sub_category)[sub_category]
     end
   end
 
