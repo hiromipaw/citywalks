@@ -21,6 +21,17 @@ module WalkCreator
     end
   end
 
+  def get_categories(pins)
+    categories = []
+    pins.each do |pin|
+      results = Walk.request_upper_graph(pin)
+      results.each do |result|
+        categories += result
+      end
+    end
+
+  end
+
   def retrieve_position(ip)
     Walk.request_block(ip).doc["ip_block"]
   end
