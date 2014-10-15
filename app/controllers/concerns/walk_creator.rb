@@ -4,7 +4,6 @@ module WalkCreator
   def initialize_walk(params)
     params[:location] = set_location(params[:location])
     params[:pins] = params[:pins].split(",")
-    params[:categories] = get_categories(params[:pins]) unless params[:categories]
     Walk.new(params)
   end
 
@@ -22,16 +21,6 @@ module WalkCreator
     end
   end
 
-  def get_categories(pins)
-    categories = []
-    pins.each do |pin|
-      results = Walk.request_upper_graph(pin)
-      results.each do |result|
-        categories += result
-      end
-    end
-    categories
-  end
 
   def retrieve_position(ip)
     Walk.request_block(ip).doc["ip_block"]

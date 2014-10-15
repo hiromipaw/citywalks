@@ -4,9 +4,9 @@ require 'json'
 module Restful
 
   def send_request(end_point)
-    request_url = end_point
+    request_url = URI.parse(URI.encode(end_point))
     log "Request URL: #{request_url}"
-    res = Net::HTTP.get_response(URI::parse(request_url))
+    res = Net::HTTP.get_response(request_url)
     unless res.kind_of? Net::HTTPSuccess
       raise Restful::RequestError, "HTTP Response: #{res.code} #{res.message}"
     end
