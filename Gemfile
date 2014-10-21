@@ -15,6 +15,9 @@ gem 'spring', :group => :development
 # Serializer for JSON
 gem 'active_model_serializers'
 
+# CORS
+gem 'rack-cors', :require => 'rack/cors'
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
 

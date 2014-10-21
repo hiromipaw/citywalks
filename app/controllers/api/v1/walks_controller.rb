@@ -1,4 +1,6 @@
 class Api::V1::WalksController < ApplicationController
+  respond_to :json
+
   include WalkLocator
   include WalkCreator
 
@@ -7,7 +9,7 @@ class Api::V1::WalksController < ApplicationController
 
   def index
     if @walks
-      render :json => @walks, each_serializer: WalkSerializer, root: "walks"
+      render :json => @walks.to_a, each_serializer: WalkSerializer, root: "walks"
     else
       @error = Error.new(:text => "404 Not found", :status => 404, :url => request.url, :method => request.method)
       render :json => @error.serializer
@@ -60,9 +62,10 @@ class Api::V1::WalksController < ApplicationController
   # DELETE /walks/1
   # DELETE /walks/1.json
   def destroy
-    @walk.destroy
-    respond_to do |format|
-      format.json { head :ok }
+    if @walk.destroy
+      render :json => { :head => ok }
+    else
+      render :json => @walk.errors
     end
   end
 

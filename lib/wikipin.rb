@@ -19,4 +19,8 @@ module Wikipin
     send_request("#{PIN_SERVICE_URL}/api/v1/blocks?ip_address=#{ip}")
   end
 
+  def get_pin(pin)
+    send_request("#{PIN_SERVICE_URL}#{pin}")
+  end
+
 end

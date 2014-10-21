@@ -28,5 +28,13 @@ module Citywalks
     # config.i18n.default_locale = :de
 
     config.autoload_paths += %W(#{config.root}/lib) # to load libs
+
+    config.middleware.use Rack::Cors do
+      allow do
+        origins "*"
+        resource "*", headers: :any, methods: [:get, :post, :put, :delete, :options]
+      end
+    end
+
   end
 end

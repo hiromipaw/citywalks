@@ -1,6 +1,7 @@
 class Walk
   include Mongoid::Document
   include Mongoid::Timestamps::Created
+  include ActiveModel::SerializerSupport
   extend Wikipin
   extend Restful
   include Wikicat
@@ -17,5 +18,6 @@ class Walk
   index({ location: "2d" }, { min: -200, max: 200 })
 
   validates :pins, length: { minimum: 0, maximum: 10 }
+
 
 end

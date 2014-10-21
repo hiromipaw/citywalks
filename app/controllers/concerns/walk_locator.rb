@@ -11,11 +11,15 @@ module WalkLocator
   end
 
   def walks_by_ip(ip)
-    block = Walk.request_block(ip).doc["ip_block"]
-    if block
-      longitude = block["point"].scan(/\(([^\)]+)\)/).last.first.split(" ")[0]
-      latitude = block["point"].scan(/\(([^\)]+)\)/).last.first.split(" ")[1]
-      Walk.geo_near([ longitude.to_f, latitude.to_f ]).spherical
+    if ip = "127.0.0.1"
+      walks_by_point("41.23,2.09")
+    else
+      block = Walk.request_block(ip).doc["ip_block"]
+      if block
+        longitude = block["point"].scan(/\(([^\)]+)\)/).last.first.split(" ")[0]
+        latitude = block["point"].scan(/\(([^\)]+)\)/).last.first.split(" ")[1]
+        Walk.geo_near([ longitude.to_f, latitude.to_f ]).spherical
+      end
     end
   end
 
